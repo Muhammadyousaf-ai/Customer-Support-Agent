@@ -1,0 +1,17 @@
+**/node_modules
+**/dist
+**/.next
+**/.next-voice
+**/test-results
+**/playwright-report
+**/*.tsbuildinfo
+.env
+.env.*
+!.env.example
+.turbo
+coverage
+apps/web/*
+!apps/web/package.json
+docs
+evaluations
+tests

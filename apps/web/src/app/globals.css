@@ -1,0 +1,201 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* Design tokens. Structure (shadcn semantic slots, shell sizes, radii, light/dark switch on <html class="dark">)
+   follows the Auren design system (docs/design/README.md); the palette is Classic Tech & SaaS (white, ice, royal blue, deep navy). */
+@theme {
+  /* Neutral scale */
+  --color-ink: #0F294A; /* headings, primary text */
+  --color-body: #1B4079; /* secondary text */
+  --color-placeholder: #6F94D6;
+  --color-faint: #3F66A8; /* timestamps, captions */
+  --color-surface: #F4F8FB; /* page wash, hint boxes */
+  --color-wash: #E1ECFC; /* secondary surface, input fill */
+  --color-border-soft: #CFDFF8;
+  --color-divider: #B7CEF3;
+  --color-rule: #D3E2F9;
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* App shell */
+  --spacing-sidebar: 220px;
+  --spacing-topbar: 64px;
+  --spacing-drawer: 380px; /* observability drawer */
+  --spacing-composer: 56px;
+
+  --radius-nav: 12px;
+  --radius-swatch: 5px; /* small buttons */
+  --radius-menu: 10px;
+  --radius-chip: 24px;
+
+  --shadow-card: 0 8px 16px rgb(15 41 74 / 0.06);
+}
+
+@theme inline {
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+:root {
+  --radius: 0.5rem;
+  --background: #FFFFFF; /* Crisp White */
+  --foreground: #0F294A; /* Deep Navy */
+  --card: #FFFFFF;
+  --card-foreground: #0F294A;
+  --popover: #FFFFFF;
+  --popover-foreground: #0F294A;
+  --primary: #1D63ED; /* Royal Blue */
+  --primary-foreground: #FFFFFF;
+  --secondary: #F4F8FB; /* Soft Ice */
+  --secondary-foreground: #0F294A;
+  --muted: #F4F8FB;
+  --muted-foreground: #3F66A8;
+  --accent: #D6E5FC; /* hover fill: visibly darker than white and Soft Ice */
+  --accent-foreground: #0F294A;
+  --destructive: #B3261E;
+  --border: #C3D6F4;
+  --input: #C3D6F4;
+  --ring: #1D63ED;
+  --chart-1: #1D63ED;
+  --chart-2: #0F294A;
+  --chart-3: #5A8EF2;
+  --chart-4: #6F94D6;
+  --chart-5: #B7CEF3;
+  --sidebar: #F4F8FB;
+  --sidebar-foreground: #0F294A;
+  --sidebar-primary: #1D63ED;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #D6E5FC;
+  --sidebar-accent-foreground: #0F294A;
+  --sidebar-border: #C3D6F4;
+  --sidebar-ring: #1D63ED;
+}
+
+/* Dark: Deep Navy surfaces. Keyed off `.dark` on <html> so Tailwind `dark:` variants and the slot overrides
+   share one switch. */
+.dark {
+  color-scheme: dark;
+  --background: #0A1D36;
+  --foreground: #F4F8FB;
+  --card: #0F294A; /* Deep Navy */
+  --card-foreground: #F4F8FB;
+  --popover: #0F294A;
+  --popover-foreground: #F4F8FB;
+  --primary: #1D63ED;
+  --primary-foreground: #FFFFFF;
+  --secondary: #12376B;
+  --secondary-foreground: #F4F8FB;
+  --muted: #12376B;
+  --muted-foreground: #8FB4F5;
+  --accent: #1D4C93; /* hover fill: clearly lighter than card and background */
+  --accent-foreground: #FFFFFF;
+  --destructive: #E0645C;
+  --border: #24508F;
+  --input: #24508F;
+  --ring: #5A8EF2;
+  --chart-1: #5A8EF2;
+  --chart-2: #F4F8FB;
+  --chart-3: #1D63ED;
+  --chart-4: #8FB4F5;
+  --chart-5: #2F5FA6;
+  --sidebar: #0F294A;
+  --sidebar-foreground: #DCE8FC;
+  --sidebar-primary: #1D63ED;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #1D4C93;
+  --sidebar-accent-foreground: #FFFFFF;
+  --sidebar-border: #24508F;
+  --sidebar-ring: #5A8EF2;
+
+  --color-border-soft: #24508F;
+  --color-divider: #2E5FA8;
+  --color-rule: #173F78;
+}
+
+/* Feature UI uses raw tokens (bg-surface, text-ink, …); remap their values to dark equivalents inside
+   the `.app-content` subtree and portaled overlays (popover, dropdown, select, dialog, sheet mount in <body>). */
+.dark .app-content,
+.dark [data-slot$="-content"] {
+  --color-ink: #F4F8FB;
+  --color-body: #BBD3F8;
+  --color-placeholder: #6F96D8;
+  --color-faint: #86AAEA;
+  --color-surface: #0F294A;
+  --color-wash: #12376B;
+}
+
+/* Selected state for segmented controls / filter chips / toggle buttons, theme-safe. */
+.app-toggle[aria-pressed="true"],
+.app-toggle[aria-selected="true"],
+.app-toggle[aria-checked="true"] {
+  border-color: var(--foreground) !important;
+  background-color: color-mix(in oklab, var(--foreground) 8%, transparent) !important;
+  color: var(--foreground) !important;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  a[href],
+  button,
+  summary,
+  select,
+  [role="button"],
+  [role="checkbox"],
+  [role="link"],
+  [role="menuitem"],
+  [role="option"],
+  [role="tab"],
+  [role="switch"],
+  [role="radio"] {
+    cursor: pointer;
+  }
+  :is(button, select, [role="button"], [role="checkbox"]):disabled,
+  [aria-disabled="true"] {
+    cursor: not-allowed;
+  }
+}

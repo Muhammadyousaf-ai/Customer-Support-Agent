@@ -1,0 +1,33 @@
+# Local development database (and, optionally, the production image).
+#   docker compose up -d db                 PostgreSQL + pgvector on host port 5433
+#   docker compose --profile app up --build API container on :4000 (needs OPENAI_API_KEY and ADMIN_API_KEY in your shell)
+# The credentials below are for LOCAL DEVELOPMENT ONLY; the API refuses them when NODE_ENV=production.
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_USER: support
+      POSTGRES_PASSWORD: support
+      POSTGRES_DB: support_ai
+    ports: ["127.0.0.1:5433:5432"]
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U support -d support_ai"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+  api:
+    profiles: ["app"]
+    build: .
+    depends_on:
+      db: { condition: service_healthy }
+    environment:
+      NODE_ENV: development
+      PORT: "4000"
+      DATABASE_URL: postgres://support:support@db:5432/support_ai
+      WEB_ORIGIN: http://localhost:3000
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      ADMIN_API_KEY: ${ADMIN_API_KEY:-}
+    ports: ["4000:4000"]
+volumes:
+  pgdata:

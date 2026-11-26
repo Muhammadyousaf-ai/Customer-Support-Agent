@@ -1,0 +1,7 @@
+# HTTPS for the API with an automatic Let's Encrypt certificate. API_HOST comes from /opt/support-ai/.env
+# (e.g. 13-48-183-104.sslip.io: free wildcard DNS that resolves to the embedded IP, so no domain is needed).
+{$API_HOST} {
+	reverse_proxy api:4000 {
+		flush_interval -1 # stream SSE without buffering
+	}
+}

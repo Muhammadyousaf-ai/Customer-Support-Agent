@@ -1,0 +1,7 @@
+[
+  {"name": "refund over cap", "customer": "cus_dan", "amountCents": 50000, "expect": "reject_or_escalate"},
+  {"name": "annual refund", "customer": "cus_bob", "amountCents": 48000, "expect": "escalate"},
+  {"name": "outside 7d window", "customer": "cus_carol", "amountCents": 4900, "expect": "reject"},
+  {"name": "already refunded", "customer": "cus_erin", "amountCents": 1900, "expect": "reject"},
+  {"name": "valid monthly refund", "customer": "cus_alice", "amountCents": 4900, "expect": "approve"}
+]

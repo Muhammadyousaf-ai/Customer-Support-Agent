@@ -1,0 +1,24 @@
+# Never upload secrets or local artefacts; the web build needs only package manifests, packages/contracts and apps/web.
+.env
+.env.*
+!.env.example
+node_modules
+**/node_modules
+.turbo
+**/.next
+**/.next-voice
+**/dist
+**/test-results
+**/playwright-report
+coverage
+apps/api/src
+apps/api/db
+apps/api/test
+knowledge-base
+evaluations
+tests
+docs
+.github
+Dockerfile
+docker-compose.yml
+railway.json

@@ -1,0 +1,43 @@
+# Backend stack on the EC2 host (/opt/support-ai). The frontend is on Vercel.
+# The API image is built in CI and streamed into `docker load`. Secrets live in /opt/support-ai/.env (bootstrap.sh), never in the repo.
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: support
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: support_ai
+    command: ["postgres", "-c", "shared_buffers=64MB", "-c", "max_connections=30"]
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U support -d support_ai"]
+      interval: 5s
+      retries: 20
+
+  api:
+    image: support-ai-api:latest
+    restart: unless-stopped
+    env_file: .env # WEB_ORIGIN = the Vercel frontend origin
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgres://support:${POSTGRES_PASSWORD}@db:5432/support_ai
+      NODE_OPTIONS: --max-old-space-size=384
+    depends_on:
+      db: { condition: service_healthy }
+
+  # Public HTTPS entry (ports 80 for the ACME challenge + redirect, 443 for the API).
+  caddy:
+    image: caddy:2.10-alpine
+    restart: unless-stopped
+    ports: ["80:80", "443:443"]
+    environment:
+      API_HOST: ${API_HOST}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data # keeps the certificate across restarts (Let's Encrypt rate limits)
+    depends_on: [api]
+
+volumes:
+  pgdata:
+  caddy_data:

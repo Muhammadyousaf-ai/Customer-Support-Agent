@@ -1,0 +1,30 @@
+name: Deploy
+
+# Push to main -> build the API image -> copy to the EC2 host -> deploy.sh restarts the stack.
+# The frontend is on Vercel. The image is built here (the 1 GB host is too small to build) and streamed over SSH.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency: { group: deploy, cancel-in-progress: false }
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build image
+        run: docker build -t support-ai-api .
+      - name: Ship and deploy
+        env:
+          SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          HOST: ${{ secrets.DEPLOY_HOST }}
+        run: |
+          set -o pipefail
+          install -m 600 /dev/null key.pem && printf '%s\n' "$SSH_KEY" > key.pem
+          mkdir -p ~/.ssh && ssh-keyscan -H "$HOST" >> ~/.ssh/known_hosts
+          # Stream the image straight into docker load: the 8 GB disk has no room for a tarball.
+          docker save support-ai-api:latest | gzip -1 | ssh -i key.pem "ubuntu@$HOST" 'gunzip | docker load'
+          scp -i key.pem deploy/docker-compose.yml deploy/Caddyfile deploy/deploy.sh "ubuntu@$HOST:/opt/support-ai/"
+          ssh -i key.pem "ubuntu@$HOST" 'bash /opt/support-ai/deploy.sh'

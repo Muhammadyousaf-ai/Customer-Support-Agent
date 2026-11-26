@@ -1,0 +1,19 @@
+[
+  {"id": "monthly-refund-pro", "query": "Can I get a refund for my Pro subscription?", "tier": "pro", "contractType": "monthly", "inScope": true, "expectDocument": "refund-policy.md", "expectHeading": "Monthly subscription refunds"},
+  {"id": "money-back-paraphrase", "query": "Can I get my money back? I paid yesterday.", "tier": "basic", "contractType": "monthly", "inScope": true, "expectDocument": "refund-policy.md", "expectHeading": "Monthly subscription refunds"},
+  {"id": "annual-refund", "query": "I want a refund on my annual plan", "tier": "pro", "contractType": "annual", "inScope": true, "expectDocument": "refund-policy.md", "expectHeading": "Annual subscription refunds"},
+  {"id": "enterprise-refund", "query": "Can my company get a refund on our enterprise contract?", "tier": "enterprise", "contractType": "annual", "inScope": true, "expectDocument": "refund-policy.md", "expectHeading": "Enterprise refund exceptions"},
+  {"id": "cancel-monthly", "query": "How do I cancel my subscription?", "tier": "pro", "contractType": "monthly", "inScope": true, "expectDocument": "cancellation-policy.md", "expectHeading": "Cancelling a monthly subscription"},
+  {"id": "cancel-enterprise", "query": "How do I cancel our enterprise contract?", "tier": "enterprise", "contractType": "annual", "inScope": true, "expectDocument": "cancellation-policy.md", "expectHeading": "Enterprise contract termination"},
+  {"id": "rate-limit", "query": "I keep getting 429 errors from the API", "tier": "pro", "contractType": "monthly", "inScope": true, "expectDocument": "troubleshooting-guide.md", "expectHeading": "API rate limits and 429 errors"},
+  {"id": "login", "query": "I cannot log in to my account", "tier": "free", "contractType": "monthly", "inScope": true, "expectDocument": "troubleshooting-guide.md", "expectHeading": "Login problems"},
+  {"id": "failed-payment", "query": "My card payment failed, what happens now?", "tier": "basic", "contractType": "monthly", "inScope": true, "expectDocument": "billing-policy.md", "expectHeading": "Failed payments"},
+  {"id": "duplicate-charge", "query": "I was charged twice this month", "tier": "pro", "contractType": "monthly", "inScope": true, "expectDocument": "billing-policy.md", "expectHeading": "Duplicate or unexpected charges"},
+  {"id": "plan-price", "query": "How much does the Pro plan cost?", "tier": "pro", "contractType": "monthly", "inScope": true, "expectDocument": "subscription-policy.md", "expectHeading": "Pro plan"},
+  {"id": "when-escalate", "query": "When will a human agent respond to my escalation?", "tier": "pro", "contractType": "monthly", "inScope": true, "expectDocument": "escalation-policy.md", "expectHeading": "Escalation response times"},
+  {"id": "oos-sports", "query": "Who won the football game last night?", "inScope": false},
+  {"id": "oos-poem", "query": "Can you write me a poem about the ocean?", "inScope": false},
+  {"id": "oos-stock", "query": "What is your company's stock price?", "inScope": false},
+  {"id": "oos-transfer", "query": "Can I transfer my subscription to my friend?", "tier": "pro", "contractType": "monthly", "inScope": false},
+  {"id": "oos-recipe", "query": "What is a good recipe for pasta carbonara?", "inScope": false}
+]
